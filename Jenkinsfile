@@ -1,6 +1,6 @@
 node('MVN3.8.4') {
     stage('git') { 
-        git 'https://github.com/GitPracticeRepo/java11-examples.git'
+        git 'https://github.com/Manojkumarpolaka/javacalculator.git'
     }
     stage('Build') {
         sh '''
