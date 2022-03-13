@@ -5,7 +5,7 @@ node('MVN3.8.4') {
     stage('Build') {
         sh '''
             echo "PATH=${PATH}"
-            echo "M2_HOME=${M2_HOME}"
+            echo "M2_HOME=${M2_HOME}/bin"
 
         '''
         sh 'mvn clean package'
