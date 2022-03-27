@@ -1,13 +1,25 @@
-node('MVN3.8.4') {
-    stage('git') { 
-        git 'https://github.com/Manojkumarpolaka/javacalculator.git'
-    }
-    stage('Build') {
-        sh '''
-            echo "PATH=${PATH}"
-            echo "M2_HOME=${M2_HOME}"
+pipeline {
+    agent none
+    stages { 
+        stage('SCM Checkout') {
+            agent { label 'master' }
+            steps{
+            git 'git remote add origin https://github.com/Manojkumarpolaka/java11examples.git'
+            }
+        }
 
-        '''
-        sh '/usr/local/apache-maven-3.8.4/bin/mvn clean package'
+        stage('Build package') {
+            agent { label 'mvn3.8.5' }
+            steps{
+                sh 'mvn package'
+            }
+        }
+
+        stage('Build docker image') {
+            agent { label 'master' }
+            steps {  
+                sh 'docker build -t samplespc:$BUILD_NUMBER .'
+            }
+        }
     }
 }
